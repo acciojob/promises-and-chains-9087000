@@ -1,34 +1,30 @@
-document.getElementById('userForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the form from submitting the traditional way
+//your JS code here. If required.
 
-    const ageInput = document.getElementById('age').value;
-    const nameInput = document.getElementById('name').value;
+const form1 = document.getElementById("form1");
 
-    // Validate inputs are not empty
-    if (ageInput === '' || nameInput === '') {
-        alert('Please enter valid details');
-        return;
-    }
+form1.addEventListener('submit', fetchData);
 
-    const age = parseInt(ageInput);
-    const name = nameInput;
+function fetchData(e){
+	e.preventDefault();
+	const name = document.getElementById("name").value;
+	const age = document.getElementById("age").value;
 
-    // Create a promise that resolves or rejects based on age
-    const ageCheckPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (age > 18) {
-                resolve();
-            } else {
-                reject();
-            }
-        }, 4000);
-    });
-
-    ageCheckPromise
-        .then(() => {
-            alert(`Welcome, ${name}. You can vote.`);
-        })
-        .catch(() => {
-            alert(`Oh sorry ${name}. You aren't old enough.`);
-        });
-});
+	const prom = new Promise((resolve,reject)=>{
+		      if(age >=18){
+				  setTimeout(()=>{
+					resolve();  
+				  },4000);
+			  }
+		else{
+			setTimeout(()=>{
+					reject(); 
+				  },4000);
+		   }
+	     });
+	prom.then(()=>{
+		alert(`Welcome, ${name}. You can vote.`);
+	})
+	.catch((error)=>{
+		alert(`Oh sorry ${name}. You aren't old enough.`);
+	});
+}

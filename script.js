@@ -1,30 +1,32 @@
 //your JS code here. If required.
+const age = document.getElementById('age');
+const name = document.getElementById('name');
+const form = document.getElementById('myForm')
 
-const form1 = document.getElementById("form1");
-
-form1.addEventListener('submit', fetchData);
-
-function fetchData(e){
+form.addEventListener('submit', (e)=>{
 	e.preventDefault();
-	const name = document.getElementById("name").value;
-	const age = document.getElementById("age").value;
-
-	const prom = new Promise((resolve,reject)=>{
-		      if(age >=18){
-				  setTimeout(()=>{
-					resolve();  
-				  },4000);
-			  }
-		else{
-			setTimeout(()=>{
-					reject(); 
-				  },4000);
-		   }
-	     });
-	prom.then(()=>{
-		alert(`Welcome, ${name}. You can vote.`);
+	function onRes(){
+		let val = name.value;
+		alert(`Welcome, ${val}. You can vote.`);
+	}
+	
+	function onRej() {
+		let val = name.value;
+		alert(`Oh sorry ${val}. You aren't old enough.`);
+	}
+	
+	let vote = parseInt(age.value);
+	
+	let promise = new Promise((resolve, reject)=>{
+		setTimeout(()=>{
+			if(vote>18){
+				resolve("vote allowed");
+			}
+			else{
+				reject("vote not allowed");
+			}
+		},4000)
 	})
-	.catch((error)=>{
-		alert(`Oh sorry ${name}. You aren't old enough.`);
-	});
-}
+	
+	promise.then(onRes).catch(onRej);
+})

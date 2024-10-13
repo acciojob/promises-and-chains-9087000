@@ -1,31 +1,34 @@
-let formbutton = document.getElementById("btn");
-function promiseApi1(name , age)
-{
- return new Promise((resolve , reject) => {
+document.getElementById('userForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the traditional way
+
+    const ageInput = document.getElementById('age').value;
+    const nameInput = document.getElementById('name').value;
+
+    // Validate inputs are not empty
+    if (ageInput === '' || nameInput === '') {
+        alert('Please enter valid details');
+        return;
+    }
+
+    const age = parseInt(ageInput);
+    const name = nameInput;
+
+    // Create a promise that resolves or rejects based on age
+    const ageCheckPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
-            if(age > 18)
-            {
-                resolve(
-                    alert(`Welcome, ${name}. You can vote.`)
-                    // console.log(`You can vote , ${name}`)
-                )
+            if (age > 18) {
+                resolve();
+            } else {
+                reject();
             }
-            else
-            {
-                 alert(`Oh sorry ${name}. You aren't old enough.`)
-            }
-        } , 4000)
- })
-}
-formbutton.addEventListener("click" , (event) => {
-    event.preventDefault();
-    let nameinput = document.getElementById("name").value;
-    let ageinput = document.getElementById("age").value;
-    if (nameinput == "" && ageinput == "") {
-        alert("Please enter valid details")
-    }
-    else
-    {
-        promiseApi1(nameinput , ageinput);
-    }
-})
+        }, 4000);
+    });
+
+    ageCheckPromise
+        .then(() => {
+            alert(`Welcome, ${name}. You can vote.`);
+        })
+        .catch(() => {
+            alert(`Oh sorry ${name}. You aren't old enough.`);
+        });
+});

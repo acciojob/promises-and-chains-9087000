@@ -1,36 +1,31 @@
-//your JS code here. If required.
-// Add event listener for form submission
-document.getElementById('userForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent default form submission
-
-    // Get input values
-    const age = document.getElementById('age').value;
-    const name = document.getElementById('name').value;
-
-    // Check for empty inputs
-    if (!age || !name) {
-        alert("Please fill in both fields.");
-        return;
-    }
-
-    // Create a promise that resolves or rejects based on age
-    const agePromise = new Promise(function (resolve, reject) {
+let formbutton = document.getElementById("btn");
+function promiseApi1(name , age)
+{
+ return new Promise((resolve , reject) => {
         setTimeout(() => {
-            if (age >= 18) {
-                resolve(name);
-            } else {
-                reject(name);
+            if(age > 18)
+            {
+                resolve(
+                    alert(`Welcome, ${name}. You can vote.`)
+                    // console.log(`You can vote , ${name}`)
+                )
             }
-        }, 4000); // 4 second delay
-    });
-
-    // Handle the promise resolution or rejection
-    agePromise
-        .then((name) => {
-            alert(`Welcome, ${name}. You can vote.`);
-        })
-        .catch((name) => {
-            alert(`Oh sorry ${name}. You aren't old enough.`);
-        });
-});
-
+            else
+            {
+                 alert(`Oh sorry ${name}. You aren't old enough.`)
+            }
+        } , 4000)
+ })
+}
+formbutton.addEventListener("click" , (event) => {
+    event.preventDefault();
+    let nameinput = document.getElementById("name").value;
+    let ageinput = document.getElementById("age").value;
+    if (nameinput == "" && ageinput == "") {
+        alert("Please enter valid details")
+    }
+    else
+    {
+        promiseApi1(nameinput , ageinput);
+    }
+})
